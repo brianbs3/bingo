@@ -1,12 +1,15 @@
 <html>
   <head>
+		<script type="text/javascript" src="../jquery-ui-1.10.0/jquery-1.9.0.js"></script>
     <script language=javascript>
       var usedNumbers = new Array();
       var count = 0;
       function changeBox(b)
       {
-        var box = document.getElementById(b);
-        box.className=(box.className == "box" ? "boxSelected" : "box");
+        //var box = $(b).attr('id');
+        var className=($('#'+b).attr('class') == "box" ? "boxSelected" : "box");
+        console.log('class name: ' + className);
+        $('#'+b).addClass(className);
         //document.getElementById("currentNumber").innerHTML = b;
       }
       function nextNumber()
