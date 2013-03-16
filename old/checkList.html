@@ -1,7 +1,23 @@
 <html>
   <head>
 		<script type="text/javascript" src="../jquery-ui-1.10.0/jquery-1.9.0.js"></script>
+		<script type="text/javascript" src="../jquery-ui-1.10.0/ui/jquery-ui.js"></script>
+    <link rel=stylesheet type=text/stylesheet href="../jquery-ui-themes-1.10.0/themes/overcast/jquery-ui.css">
+    <link rel=stylesheet type=text/stylesheet href="../jquery-ui-themes-1.10.0/themes/overcast/jquery.ui.theme.css">
+
     <script language=javascript>
+      $(document).ready(function()
+      {
+        $('#bingoButtons').buttonset();        
+        $('td').addClass('ui-widget-content');
+      
+      });
+
+      function resetBoard()
+      {
+        $('td').switchClass('box', 'ui-state-error');
+        $('#currentNumber').html("Press Next to Start.");
+      }
       var usedNumbers = new Array();
       var count = 0;
       function changeBox(b)
@@ -9,7 +25,8 @@
         //var box = $(b).attr('id');
         var className=($('#'+b).attr('class') == "box" ? "boxSelected" : "box");
         console.log('class name: ' + className);
-        $('#'+b).addClass(className);
+        //$('#'+b).hide('fade').show('fade').addClass('ui-state-error');
+        $('#'+b).switchClass('box', 'ui-state-error');
         //document.getElementById("currentNumber").innerHTML = b;
       }
       function nextNumber()
@@ -75,7 +92,24 @@
     <style type=text/css>
       body
       {
-        background-color: blue;
+        background-color: white;
+      }
+      td { border: 1px solid; 
+        background-color:black; 
+        font-size: 28px;
+        text-align: center;
+        font-family: courier;
+        cursor: pointer;
+      }
+      table,tr { border: 1px solid; }
+      table { border: 1px solid; }
+      .currentNumber
+      {
+
+        font-size: 160px;
+        text-align: center;
+        color: #FF6;
+        background-color: #000;
       }
       .box
       {
@@ -96,24 +130,19 @@
         font-family: courier;
         cursor: pointer;
       }
-      #currentNumber
-      {
-        font-size: 160px;
-        text-align: center;
-        color: white;
-      }
       th
       {
         color: white;
         background-color: black;
+        border: 1px solid;
       }
     </style>
   </head>
   <body>
-    <table width=100% border=1>
+    <table width=100%>
       <tr>
         <td width=50%>
-          <table border=1 width=100%>
+          <table width=100%>
             <th>B</th><th>I</th><th>N</th><th>G</th><th>O</th>
             <tr>
               <td id=B1 class=box onClick=changeBox('B1');>1</td>
@@ -222,13 +251,16 @@
             </tr>
           </table>
         </td>
-        <td>
-          <div id=currentNumber>Press Next to Start.</div>
+        <td class=currentNumber>
+          <div id=currentNumber class=currentNumber>Press Next to Start.</div>
         </td>
       </tr>
     </table>
-    <input type=button onClick=nextNumber(); value="Next">
-    <input type=button onClick=dumpUsedNumbers(); value="Used Numbers">
+    <div id=bingoButtons>
+      <input class=bingoButton type=button onClick=nextNumber(); value="Next">
+      <input class=bingoButton type=button onClick=dumpUsedNumbers(); value="Used Numbers">
+      <input class=bingoButton type=button onClick=resetBoard(); value="Reset">
+    </div>
     <br>
     <div id=usedNumbersDiv> </div>
   </body>
