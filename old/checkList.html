@@ -10,13 +10,17 @@
       {
         $('#bingoButtons').buttonset();        
         $('td').addClass('ui-widget-content');
-      
+        $('.currentNumber').removeClass('ui-widget-content');
+        resetBoard(); 
       });
 
       function resetBoard()
       {
-        $('td').switchClass('box', 'ui-state-error');
-        $('#currentNumber').html("Press Next to Start.");
+        $('td').removeClass('ui-state-error').hide().show('fade', 1600);
+        //$('#currentNumber').hide().show('shake', 900);
+        $('#currentNumber').html("BINGO.").css('font-size', '2em');
+        usedNumbers = null;
+        usedNumbers = new Array();
       }
       var usedNumbers = new Array();
       var count = 0;
@@ -25,8 +29,8 @@
         //var box = $(b).attr('id');
         var className=($('#'+b).attr('class') == "box" ? "boxSelected" : "box");
         console.log('class name: ' + className);
-        //$('#'+b).hide('fade').show('fade').addClass('ui-state-error');
-        $('#'+b).switchClass('box', 'ui-state-error');
+        $('#'+b).hide('fade').fadeIn().addClass('ui-state-error');
+        $('.currentNumber').css('font-size', '4em');
         //document.getElementById("currentNumber").innerHTML = b;
       }
       function nextNumber()
@@ -53,27 +57,29 @@
         }
         if(randomNumber <= 15)
         {
-          document.getElementById("currentNumber").innerHTML = "B " + randomNumber;
+          $('#currentNumber').html('B ' + randomNumber).hide().fadeIn(800);
+          //document.getElementById("currentNumber").innerHTML = "B " + randomNumber;
           changeBox("B"+randomNumber);
         }
         else if(randomNumber >= 16 && randomNumber <= 30)
         {
-          document.getElementById("currentNumber").innerHTML = "I " + randomNumber;
+          $('#currentNumber').html('I ' + randomNumber).hide().fadeIn(800);
           changeBox("I"+randomNumber);
         }
         else if(randomNumber >= 31 && randomNumber <= 45)
         {
-          document.getElementById("currentNumber").innerHTML = "N " + randomNumber;
+          $('#currentNumber').html('N ' + randomNumber).hide().fadeIn(800);
           changeBox("N"+randomNumber);
         }
         else if(randomNumber >= 46 && randomNumber <= 60)
         {
-          document.getElementById("currentNumber").innerHTML = "G " + randomNumber;
+          $('#currentNumber').html('G ' + randomNumber).hide().fadeIn(800);
+          changeBox("N"+randomNumber);
           changeBox("G"+randomNumber);
         }
         else if(randomNumber >= 61 && randomNumber <= 75)
         {
-          document.getElementById("currentNumber").innerHTML = "O " + randomNumber;
+          $('#currentNumber').html('O ' + randomNumber).hide().fadeIn(800);
           changeBox("O"+randomNumber);
         }
         usedNumbers[count] = r;
@@ -94,22 +100,24 @@
       {
         background-color: white;
       }
-      td { border: 1px solid; 
+      td { border: none; 
         background-color:black; 
         font-size: 28px;
         text-align: center;
         font-family: courier;
         cursor: pointer;
       }
-      table,tr { border: 1px solid; }
-      table { border: 1px solid; }
+      table,tr { border: none; }
+      table { border: none; }
       .currentNumber
       {
 
-        font-size: 160px;
+        font-size: 4em;
         text-align: center;
         color: #FF6;
         background-color: #000;
+        overflow: hidden;
+        height: 100%;
       }
       .box
       {
@@ -252,10 +260,11 @@
           </table>
         </td>
         <td class=currentNumber>
-          <div id=currentNumber class=currentNumber>Press Next to Start.</div>
+          <div id=currentNumber class=currentNumber>BINGO.</div>
         </td>
       </tr>
     </table>
+    <br>
     <div id=bingoButtons>
       <input class=bingoButton type=button onClick=nextNumber(); value="Next">
       <input class=bingoButton type=button onClick=dumpUsedNumbers(); value="Used Numbers">
