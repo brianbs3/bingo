@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+  generate_board();
 });
 
 function generate_board()
