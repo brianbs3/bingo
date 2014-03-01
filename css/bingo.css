@@ -2,3 +2,18 @@ body
 {
   
 }
+
+table
+{
+  width: 100%;
+}
+td,th
+{
+  font-size: 5em;
+}
+button
+{
+  font-size: 5em;
+}
+
+
