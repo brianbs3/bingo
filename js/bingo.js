@@ -13,7 +13,7 @@ function generate_board()
     var $tr = $('#main_table').append('<tr class=rw id=row_' + i + '>');
     for(var j = 0; j <= 61; j+=15)
     {
-      var $td = $('#row_' + i).append('<td id=box_' + i + '_' + j + ' class="btn btn-ok btn-info">' + (i+j) + '</td>');
+      var $td = $('#row_' + i).append('<td id=box_' + i + '_' + j + ' class="btn btn-ok btn-success>' + (i+j) + '</td>');
     }
   }
 }
