@@ -8,12 +8,12 @@
     <meta name="apple-touch-fullscreen" content="yes" />
 
     <script language=javascript>
+      var show_board = true, $board_table;
       $(document).ready(function()
       {
         $('#bingoButtons').buttonset();        
         $('td').addClass('ui-widget-content');
         $('.currentNumber').removeClass('ui-widget-content');
-        $('#bigCurrentNumber').hide();
         resetBoard(); 
       });
 
@@ -22,7 +22,6 @@
         $('td').removeClass('ui-state-error').hide().show('fade', 1600);
         //$('#currentNumber').hide().show('shake', 900);
         $('#currentNumber').html("BINGO.").css('font-size', '2em');
-        $('#bigCurrentNumber').html("BINGO.").css('font-size', '25em');
         usedNumbers = null;
         usedNumbers = new Array();
       }
@@ -35,14 +34,27 @@
         console.log('class name: ' + className);
         $('#'+b).hide('fade').fadeIn().addClass('ui-state-error');
         $('.currentNumber').css('font-size', '4em');
-        $('#bigCurrentNumber').css('font-size', '30em');
         //document.getElementById("currentNumber").innerHTML = b;
         $("#currentNumber").html(b);
-        $("#bigCurrentNumber").html(b);
       }
       function enlarge_number()
       {
-        $('#bigCurrentNumber').toggle('fade');        
+        if(show_board)
+        {
+          $board_table = $('#bt').clone().prependTo('body');
+          $board_table.css('position', 'absolute').css('z-axis', '999').css('width', '90%');
+          $('#main_table').css('visibility', 'hidden');
+          $board_table.hide().show('fade', 1500);
+          show_board = false;
+        }
+        else
+        {
+          $('#main_table').effect("transfer", { to: $board_table }, 1000 );
+          $board_table.hide();
+          $board_table.remove();
+          $('#main_table').css('visibility', 'visible').hide().show('', 1500);
+          show_board = true;
+        }
       }
       function nextNumber()
       {
@@ -131,20 +143,6 @@
         height: 100%;
       }
 
-      .bigCurrentNumber
-      {
-
-        font-size: 4em;
-        font-family: courier;
-        text-align: center;
-        width: 100%;
-        height: 90%;
-        color: #FF6;
-        background-color: #000;
-        overflow: hidden;
-        z-axis: 99;
-        position: absolute;
-      }
       .box
       {
         background-color: white;
@@ -173,10 +171,9 @@
     </style>
   </head>
   <body>
-          <td><div id=bigCurrentNumber class=bigCurrentNumber>BINGO.</div></td>
-    <table width=100%>
+    <table width=100% id=main_table>
       <tr>
-        <td width=50%>
+        <td width=50% id=bt>
           <table width=100%>
             <th>B</th><th>I</th><th>N</th><th>G</th><th>O</th>
             <tr>
@@ -293,7 +290,7 @@
     </table>
     <br>
     <div id=bingoButtons>
-      <input class=bingoButton type=button onClick=enlarge_number(); value="Big">
+      <input class=bingoButton type=button onClick=enlarge_number(); value="Zoom">
 <!--
       <input class=bingoButton type=button onClick=nextNumber(); value="Next">
       <input class=bingoButton type=button onClick=dumpUsedNumbers(); value="Used Numbers">
