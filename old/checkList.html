@@ -30,8 +30,13 @@
       function changeBox(b)
       {
         //var box = $(b).attr('id');
-        var className=($('#'+b).attr('class') == "box" ? "boxSelected" : "box");
+        
+        var className=($('#'+b).attr('class').includes('box') ? "bSelected" : "box");
         console.log('class name: ' + className);
+        console.log($(`#${b}`).attr('class'));
+        $(`#${b}`).removeClass('box');
+        $(`#${b}`).removeClass('bSelected');
+        $('#'+b).addClass(className);
         $('#'+b).hide('fade').fadeIn().addClass('ui-state-error');
         $('.currentNumber').css('font-size', '4em');
         //document.getElementById("currentNumber").innerHTML = b;
@@ -153,10 +158,10 @@
         font-family: courier;
         cursor: pointer;
       }
-      .boxSelected
+      .bSelected
       {
-        background-color: black;
-        color: white;
+        background-color: #FF6;
+        color: #000;
         font-size: 28px;
         text-align: center;
         font-family: courier;
