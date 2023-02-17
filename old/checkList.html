@@ -2,8 +2,10 @@
   <head>
 		<script type="text/javascript" src="../jquery-ui-1.10.0/jquery-1.9.0.js"></script>
 		<script type="text/javascript" src="../jquery-ui-1.10.0/ui/jquery-ui.js"></script>
+    <link href="../css/bootstrap.min.css" rel=stylesheet>
     <link rel=stylesheet type=text/stylesheet href="../jquery-ui-themes-1.10.0/themes/overcast/jquery-ui.css">
     <link rel=stylesheet type=text/stylesheet href="../jquery-ui-themes-1.10.0/themes/overcast/jquery.ui.theme.css">
+    
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-touch-fullscreen" content="yes" />
 
@@ -16,7 +18,7 @@
         $('.currentNumber').removeClass('ui-widget-content');
         resetBoard(); 
       });
-
+      
       function resetBoard()
       {
         $('td').removeClass('ui-state-error').hide().show('fade', 1600);
@@ -41,6 +43,7 @@
         $('.currentNumber').css('font-size', '4em');
         //document.getElementById("currentNumber").innerHTML = b;
         $("#currentNumber").html(b);
+        usedNumbers.push(b);
       }
       function enlarge_number()
       {
@@ -117,11 +120,13 @@
       function dumpUsedNumbers()
       {
         var i = 0;
-        var usedNumbersDiv = document.getElementById("usedNumbersDiv");
+        var usedNumbersDiv = document.getElementById("used_numbers");
         usedNumbersDiv.innerHTML = "";
         for(i = 0; i < usedNumbers.length; i++)
-          usedNumbersDiv.innerHTML = usedNumbersDiv.innerHTML + usedNumbers[i] + "<br>";
+          $('#used_numbers').append(`<tr><td class=box>${i}</td><td class=box>${usedNumbers[i]}</td></tr>`);
+        $('#used_numbers').append(`<br>`);
       }
+      
     </script>
     <style type=text/css>
       body
@@ -171,6 +176,7 @@
       {
         color: white;
         background-color: black;
+        text-align: center;
         border: 1px solid;
       }
     </style>
@@ -180,7 +186,9 @@
       <tr>
         <td width=50% id=bt>
           <table width=100%>
+            <thead>
             <th>B</th><th>I</th><th>N</th><th>G</th><th>O</th>
+            </thead>
             <tr>
               <td id=B1 class=box onClick=changeBox('B1');>1</td>
               <td id=I16 class=box onClick=changeBox('I16');>16</td>
@@ -294,8 +302,14 @@
       </tr>
     </table>
     <br>
+    <table>
+      <tbody id=used_numbers>
+      </tbody>
+    </table>
+    <!-- <div id=used_numbers></div> -->
     <div id=bingoButtons>
-      <input class=bingoButton type=button onClick=enlarge_number(); value="Zoom">
+      <!-- <input class=bingoButton type=button onClick=enlarge_number(); value="Zoom"> -->
+      <button class="btn btn-primary" onClick=dumpUsedNumbers();>Show Used Numbers</button>
 <!--
       <input class=bingoButton type=button onClick=nextNumber(); value="Next">
       <input class=bingoButton type=button onClick=dumpUsedNumbers(); value="Used Numbers">
